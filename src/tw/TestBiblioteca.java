@@ -28,7 +28,7 @@ public class TestBiblioteca {
         List<String> menuList = new ArrayList<String>();
         menuList.add("1. View books in library.");
         menuList.add("2. Check library number.");
-        assertEquals(menuList, biblioteca.showMenuList());
+        assertEquals(menuList, biblioteca.getMenuList());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class TestBiblioteca {
     @Test
     public void testShowBookList(){
         List<String> books = BookList.getInstance().getBooks();
-        assertEquals(books, biblioteca.showBooks());
+        assertEquals(books, biblioteca.getBooks());
     }
 
     @Test
