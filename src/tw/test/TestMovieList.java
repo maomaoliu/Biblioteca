@@ -3,17 +3,8 @@ package tw.test;
 import org.junit.Test;
 import tw.main.MovieList;
 
-import java.util.Random;
-
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by IntelliJ IDEA.
- * User: sony
- * Date: 12-7-19
- * Time: 下午1:18
- * To change this template use File | Settings | File Templates.
- */
 public class TestMovieList {
     @Test
     public void testShowMovieList(){

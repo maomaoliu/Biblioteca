@@ -1,12 +1,5 @@
 package tw.main;
 
-/**
- * Created by IntelliJ IDEA.
- * User: sony
- * Date: 12-7-19
- * Time: 下午1:05
- * To change this template use File | Settings | File Templates.
- */
 public class Movie {
     private String name;
     private String director;

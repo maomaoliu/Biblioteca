@@ -5,13 +5,6 @@ import tw.main.Movie;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by IntelliJ IDEA.
- * User: sony
- * Date: 12-7-19
- * Time: 下午1:07
- * To change this template use File | Settings | File Templates.
- */
 public class TestMovie {
     @Test
     public void testToString(){

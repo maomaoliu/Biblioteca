@@ -5,13 +5,6 @@ import tw.main.BookList;
 
 import static junit.framework.Assert.*;
 
-/**
- * Created by IntelliJ IDEA.
- * User: sony
- * Date: 12-7-19
- * Time: 上午11:21
- * To change this template use File | Settings | File Templates.
- */
 public class TestBookList {
 
     private BookList bookList = BookList.getInstance();

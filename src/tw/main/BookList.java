@@ -3,13 +3,6 @@ package tw.main;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by IntelliJ IDEA.
- * User: noam
- * Date: 12-7-12
- * Time: 上午12:04
- * To change this template use File | Settings | File Templates.
- */
 public class BookList {
 
     private static BookList bookList;
