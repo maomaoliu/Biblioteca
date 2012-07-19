@@ -1,4 +1,4 @@
-package tw;
+package tw.main;
 
 /**
  * Created by IntelliJ IDEA.
@@ -8,5 +8,5 @@ package tw;
  * To change this template use File | Settings | File Templates.
  */
 public enum MenuOption {
-    ViewBooks, CheckLibNumber, Error;
+    ViewBooks, CheckLibNumber, ViewMovies, Error;
 }

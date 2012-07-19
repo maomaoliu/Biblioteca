@@ -1,6 +1,11 @@
-package tw;
+package tw.test;
 
+import junit.framework.Assert;
 import org.junit.Test;
+import tw.main.Biblioteca;
+import tw.main.BookList;
+import tw.main.MenuOption;
+import tw.main.MovieList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,22 +33,27 @@ public class TestBiblioteca {
         List<String> menuList = new ArrayList<String>();
         menuList.add("1. View books in library.");
         menuList.add("2. Check library number.");
+        menuList.add("3. View movies in library.");
         assertEquals(menuList, biblioteca.getMenuList());
     }
 
     @Test
     public void shouldViewBooksWithInput1(){
-        assertEquals(MenuOption.ViewBooks, biblioteca.selectMenuOption(1));
+        Assert.assertEquals(MenuOption.ViewBooks, biblioteca.selectMenuOption(1));
     }
 
     @Test
-    public void shouldViewBooksWithInput2(){
+    public void shouldCheckLibNumberWithInput2(){
         assertEquals(MenuOption.CheckLibNumber, biblioteca.selectMenuOption(2));
     }
 
     @Test
-    public void shouldViewBooksWithInput3(){
-        assertEquals(MenuOption.Error, biblioteca.selectMenuOption(3));
+    public void shouldViewMoviesWithInput3(){
+        assertEquals(MenuOption.ViewMovies, biblioteca.selectMenuOption(3));
+    }
+
+    public void shouldShowErrorWithInput4(){
+        assertEquals(MenuOption.Error, biblioteca.selectMenuOption(4));
     }
 
     @Test
@@ -70,5 +80,12 @@ public class TestBiblioteca {
     @Test
     public void testShowCheckNumberMessage(){
         assertEquals("Please talk to Librarian. Thank you.", biblioteca.checkNumber());
+    }
+
+    @Test
+    public void testShowMovies(){
+        StringBuilder moviesString = new StringBuilder("Movie name\tDirector\tRating\n");
+        moviesString.append(MovieList.getInstance().getListString());
+        assertEquals(moviesString.toString(),biblioteca.showMovies());
     }
 }
