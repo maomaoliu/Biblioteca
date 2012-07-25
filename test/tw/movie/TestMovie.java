@@ -1,7 +1,7 @@
-package tw.test;
+package tw.movie;
 
 import org.junit.Test;
-import tw.main.Movie;
+import tw.movie.Movie;
 
 import static org.junit.Assert.assertEquals;
 

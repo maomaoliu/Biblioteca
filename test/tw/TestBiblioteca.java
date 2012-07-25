@@ -1,9 +1,7 @@
-package tw.test;
+package tw;
 
 import junit.framework.Assert;
 import org.junit.Test;
-import tw.main.Biblioteca;
-import tw.main.MenuOption;
 
 import java.util.ArrayList;
 import java.util.List;

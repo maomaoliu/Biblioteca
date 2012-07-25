@@ -1,4 +1,7 @@
-package tw.main;
+package tw.movie;
+
+import tw.uitools.InputTools;
+import tw.uitools.PrintTools;
 
 public class MovieAction {
 
@@ -10,6 +13,6 @@ public class MovieAction {
         PrintTools.println("MOVIE LIST");
         PrintTools.println(this.showMovies());
         PrintTools.println("Input ENTER to return to menu.");
-        System.console().readLine();
+        InputTools.getLine();
     }
 }

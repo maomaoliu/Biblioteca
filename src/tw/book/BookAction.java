@@ -1,14 +1,16 @@
-package tw.main;
+package tw.book;
 
-import java.io.Console;
+import tw.uitools.InputTools;
+import tw.uitools.PrintTools;
+
 import java.util.List;
 
 public class BookAction {
     public void showBooks() {
         PrintTools.printlnWithStars();
         PrintTools.printlnWithStar("BOOK LIST");
-        for (String book : getBooks())
-            PrintTools.printlnWithStar(book);
+        for (Book book : getBooks())
+            PrintTools.printlnWithStar(book.toString());
         PrintTools.printlnWithStar(" ");
         PrintTools.printlnWithStar("Input BOOK NAME to reserve books.");
         PrintTools.printlnWithStar("Input 'TOMENU' to return to menu.");
@@ -17,15 +19,14 @@ public class BookAction {
 
     public void action() {
         showBooks();
-        Console console = System.console();
-        String input = console.readLine();
+        String input = InputTools.getLine();
         while (!this.judgeForToMenu(input)) {
             PrintTools.println(reserveBook(input));
-            input = console.readLine();
+            input = InputTools.getLine();
         }
     }
 
-    public List<String> getBooks() {
+    public List<Book> getBooks() {
         return BookList.getInstance().getBooks();
     }
 

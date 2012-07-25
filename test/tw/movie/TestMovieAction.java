@@ -1,8 +1,8 @@
-package tw.test;
+package tw.movie;
 
 import org.junit.Test;
-import tw.main.MovieAction;
-import tw.main.MovieList;
+import tw.movie.MovieAction;
+import tw.movie.MovieList;
 
 import static org.junit.Assert.assertEquals;
 

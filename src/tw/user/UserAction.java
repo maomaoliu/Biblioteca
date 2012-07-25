@@ -1,14 +1,15 @@
-package tw.main;
+package tw.user;
 
-import java.io.Console;
+import tw.uitools.InputTools;
+import tw.uitools.PrintTools;
 
-public class LoginAction {
+public class UserAction {
 
     private String username = null;
     private UserList userList = UserList.getInstance();
 
     public String login(String username, String password) {
-        if(userList.canLogin(username,password))     {
+        if(userList.hasUser(new User(username,password)))    {
            this.username = username;
             return "User " +username+", welcome here!";
         }
@@ -19,15 +20,14 @@ public class LoginAction {
     }
 
     public String getUsername() {
-        return username;  //To change body of created methods use File | Settings | File Templates.
+        return username;
     }
 
     public void action(){
-        Console console =  System.console();
         PrintTools.println("Input username, please.");
-        String username = console.readLine();
+        String username = InputTools.getLine();
         PrintTools.println("Input password, please.");
-        String password = new String(console.readPassword());
+        String password = new String(InputTools.getPassword());
         String output = this.login(username, password);
         PrintTools.println(output);
     }

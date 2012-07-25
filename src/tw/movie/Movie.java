@@ -1,4 +1,4 @@
-package tw.main;
+package tw.movie;
 
 public class Movie {
     private String name;

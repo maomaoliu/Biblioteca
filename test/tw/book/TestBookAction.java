@@ -1,8 +1,9 @@
-package tw.test;
+package tw.book;
 
 import org.junit.Test;
-import tw.main.BookAction;
-import tw.main.BookList;
+import tw.book.Book;
+import tw.book.BookAction;
+import tw.book.BookList;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class TestBookAction {
 
     @Test
     public void testShowBookList(){
-        List<String> books = BookList.getInstance().getBooks();
+        List<Book> books = BookList.getInstance().getBooks();
         assertEquals(books, action.getBooks());
     }
 

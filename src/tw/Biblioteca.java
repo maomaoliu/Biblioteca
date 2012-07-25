@@ -1,8 +1,13 @@
-package tw.main;
+package tw;
+
+import tw.book.BookAction;
+import tw.movie.MovieAction;
+import tw.uitools.InputTools;
+import tw.uitools.PrintTools;
+import tw.user.UserAction;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Biblioteca {
 
@@ -11,8 +16,7 @@ public class Biblioteca {
     public static void main(String[] args) {
         Biblioteca biblioteca = new Biblioteca();
         biblioteca.showWelcomeAndMenu();
-        Scanner scanner = new Scanner(System.in);
-        biblioteca.userAction(scanner);
+        biblioteca.userAction();
     }
 
     public String getUsername() {
@@ -23,8 +27,8 @@ public class Biblioteca {
         this.username = username;
     }
 
-    public String readInput(Scanner scanner) {
-        String input = scanner.nextLine();
+    public String readInput() {
+        String input = InputTools.getLine();
         this.judgeForQuitAndDoIt(input);
         return input;
     }
@@ -40,8 +44,8 @@ public class Biblioteca {
         }
     }
 
-    public void userAction(Scanner scanner) {
-        String input = this.readInput(scanner);
+    public void userAction() {
+        String input = this.readInput();
         while (true) {
             MenuOption menuOption = this.selectMenuOption(input);
             if (menuOption.equals(MenuOption.ViewBooks)) {
@@ -55,14 +59,14 @@ public class Biblioteca {
                 action.action();
                 this.showWelcomeAndMenu();
             } else if (menuOption.equals(MenuOption.Login)) {
-                LoginAction action = new LoginAction();
+                UserAction action = new UserAction();
                 action.action();
                 this.username = action.getUsername();
                 this.showWelcomeAndMenu();
             } else {
                 PrintTools.println(showErrorMessage());
             }
-            input = this.readInput(scanner);
+            input = this.readInput();
         }
     }
 

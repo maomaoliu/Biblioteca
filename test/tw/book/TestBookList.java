@@ -1,7 +1,7 @@
-package tw.test;
+package tw.book;
 
 import org.junit.Test;
-import tw.main.BookList;
+import tw.book.BookList;
 
 import static junit.framework.Assert.*;
 
@@ -11,7 +11,8 @@ public class TestBookList {
 
     @Test
     public void testGetBooks(){
-        assertEquals("Book_2", bookList.getBooks().get(1));
+        Book book2 = new Book("Book_2");
+        assertEquals(book2, bookList.getBooks().get(1));
     }
 
     @Test

@@ -2,25 +2,27 @@
 <project name="Biblioteca" default="main" basedir=".">
     <property name="dir" value="."/>
     <property name="src" value="${dir}\src"/>
+    <property name="test" value="${dir}\test"/>
     <property name="lib" value="${dir}\lib"/>
     <property name="dest" value="${dir}\bin"/>
     <property name="reports" value="${dir}\reports"/>
     <property name="targetJar" value="${dir}\Biblioteca.jar"/>
-    <property name="main_class" value="tw.main.Biblioteca"/>
+    <property name="main_class" value="tw.Biblioteca"/>
     <target name="init">
         <tstamp/>
         <mkdir dir="${dest}"/>
         <mkdir dir="${reports}"/>
     </target>
     <target name="compile" depends="init">
-        <javac srcdir="${src}" destdir="${dest}" encoding="utf-8" classpath="${lib}\junit-4.10.jar"/>
+        <javac srcdir="${src}" destdir="${dest}" encoding="utf-8"/>
+        <javac srcdir="${test}" destdir="${dest}" encoding="utf-8" classpath="${lib}\junit-4.10.jar"/>
     </target>
     <target name="test" depends="compile">
         <junit printsummary="yes" haltonfailure="yes" fork="yes">
             <classpath location="${lib}\junit-4.10.jar" path="${dest}"/>
             <formatter type="xml"/>
             <batchtest todir="${reports}">
-                <fileset dir="${src}">
+                <fileset dir="${test}">
                     <include name="**/Test*.java"/>
                 </fileset>
             </batchtest>
@@ -32,7 +34,7 @@
         </junitreport>
     </target>
     <target name="build" depends="test">
-        <jar jarfile="${targetJar}" basedir="${dest}" excludes="**/test/*.*">
+        <jar jarfile="${targetJar}" basedir="${dest}" excludes="**/Test*.*">
             <manifest>
                 <attribute name="Main-Class" value="${main_class}"/>
             </manifest>

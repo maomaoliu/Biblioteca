@@ -1,4 +1,4 @@
-package tw.main;
+package tw.uitools;
 
 public class PrintTools {
     public static void printlnWithStars() {
