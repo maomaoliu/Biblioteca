@@ -8,6 +8,7 @@ public class UserAction {
     private String username = null;
     private UserList userList = UserList.getInstance();
 
+
     public String login(String username, String password) {
         if(userList.hasUser(new User(username,password)))    {
            this.username = username;

@@ -36,6 +36,9 @@ public class Biblioteca {
     public void judgeForQuitAndDoIt(String input) {
         if (input.toLowerCase().equals("quit")) {
             PrintTools.println("Bye, wait for a moment ....");
+            /*
+             * Why is the system sleeping here?
+             */
             try {
                 Thread.sleep(1500);
             } catch (InterruptedException e) {
@@ -44,6 +47,14 @@ public class Biblioteca {
         }
     }
 
+    /*
+     * You are reading the user input two times in this method.
+     *
+     * Can you change the design so that you only read it once?
+     *
+     * Also, there is no unit test for this method. Please write unit tests.
+     *
+     */
     public void userAction() {
         String input = this.readInput();
         while (true) {

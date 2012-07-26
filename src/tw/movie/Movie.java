@@ -11,6 +11,12 @@ public class Movie {
         this.rating = rating;
     }
 
+    /*
+     * When overriding equals, you need to override hashcode as well.
+     *
+     * Please find out why and do it.
+     *
+     */
     @Override
     public String toString() {
         StringBuilder movieString = new StringBuilder();

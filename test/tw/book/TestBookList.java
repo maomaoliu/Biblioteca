@@ -9,6 +9,14 @@ public class TestBookList {
 
     private BookList bookList = BookList.getInstance();
 
+    /*
+     * There is very close coupling between BookList and TestBookList here.
+     *
+     * If you change the way books are created in BookList the test may fail.
+     *
+     * Please decouple the two classes. How can you do this?
+     *
+     */
     @Test
     public void testGetBooks(){
         Book book2 = new Book("Book_2");

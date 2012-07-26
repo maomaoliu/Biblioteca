@@ -5,6 +5,9 @@ import java.util.List;
 
 public class BookList {
 
+    /*
+     * Why are these static members?
+     */
     private static BookList bookList;
     private static List<Book> books;
 
@@ -17,6 +20,9 @@ public class BookList {
         }
     }
 
+    /*
+     * Why are you using the singleton pattern?
+     */
     public static BookList getInstance() {
         if (bookList == null) bookList = new BookList();
         return bookList;
