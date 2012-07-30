@@ -56,28 +56,31 @@ public class Biblioteca {
      *
      */
     public void userAction() {
-        String input = this.readInput();
         while (true) {
+            String input = this.readInput();
             MenuOption menuOption = this.selectMenuOption(input);
-            if (menuOption.equals(MenuOption.ViewBooks)) {
-                BookAction action = new BookAction();
-                action.action();
-                this.showWelcomeAndMenu();
-            } else if (menuOption.equals(MenuOption.CheckLibNumber)) {
-                PrintTools.println(checkNumber());
-            } else if (menuOption.equals(MenuOption.ViewMovies)) {
-                MovieAction action = new MovieAction();
-                action.action();
-                this.showWelcomeAndMenu();
-            } else if (menuOption.equals(MenuOption.Login)) {
-                UserAction action = new UserAction();
-                action.action();
-                this.username = action.getUsername();
-                this.showWelcomeAndMenu();
-            } else {
-                PrintTools.println(showErrorMessage());
-            }
-            input = this.readInput();
+            action(menuOption);
+        }
+    }
+
+    void action(MenuOption menuOption) {
+        if (menuOption.equals(MenuOption.ViewBooks)) {
+            BookAction action = new BookAction();
+            action.action();
+            this.showWelcomeAndMenu();
+        } else if (menuOption.equals(MenuOption.CheckLibNumber)) {
+            PrintTools.println(checkNumber());
+        } else if (menuOption.equals(MenuOption.ViewMovies)) {
+            MovieAction action = new MovieAction();
+            action.action();
+            this.showWelcomeAndMenu();
+        } else if (menuOption.equals(MenuOption.Login)) {
+            UserAction action = new UserAction();
+            action.action();
+            this.username = action.getUsername();
+            this.showWelcomeAndMenu();
+        } else {
+            PrintTools.println(showErrorMessage());
         }
     }
 

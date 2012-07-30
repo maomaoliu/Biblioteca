@@ -34,6 +34,11 @@ public class User {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        return this == null ? super.hashCode() : (this.getUsername().hashCode() + this.getPassword().hashCode());
+    }
+
     public String getPassword() {
         return password;
     }

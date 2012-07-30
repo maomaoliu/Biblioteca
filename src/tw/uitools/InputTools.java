@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  */
 public class InputTools {
 
-    private static Logger LOGGER = Logger.getLogger(InputTools.class.getCanonicalName());
+//    private static Logger LOGGER = Logger.getLogger(InputTools.class.getCanonicalName());
 
     private static Object input;
 
@@ -25,11 +25,11 @@ public class InputTools {
     static {
         Console console = System.console();
         if (console != null) {
-            LOGGER.info("using console to capture input");
+//            LOGGER.info("using console to capture input");
             input = console;
         }
         else {
-            LOGGER.info("using scanner to capture input");
+//            LOGGER.info("using scanner to capture input");
             input = new Scanner(System.in);
         }
     }

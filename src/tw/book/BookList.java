@@ -9,7 +9,7 @@ public class BookList {
      * Why are these static members?
      */
     private static BookList bookList;
-    private static List<Book> books;
+    private List<Book> books;
 
     private BookList() {
         books = new ArrayList<Book>();

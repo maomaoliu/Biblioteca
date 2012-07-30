@@ -32,6 +32,11 @@ public class Book {
     }
 
     @Override
+    public int hashCode() {
+        return this == null ? super.hashCode() : this.getName().hashCode();
+    }
+
+    @Override
     public String toString() {
         return this.getName();
     }
