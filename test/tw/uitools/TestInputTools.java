@@ -5,6 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.*;
+import java.rmi.activation.ActivationGroupDesc;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,7 +20,6 @@ public class TestInputTools {
     }
 
     private static void setUp() throws IOException {
-        InputTools inputTools = new InputTools();
         standardInputStream = System.in;
         redirectedInput_in = new PipedOutputStream();
         redirectedInput_out = new PipedInputStream(redirectedInput_in);
@@ -37,17 +37,17 @@ public class TestInputTools {
         System.in.close();
     }
 
-    /*
-     * I don't know why it blocked when I run this test.
-     */
     @Test
     public void testGetLine() throws IOException {
-        /*
         String string = "Hello";
         redirectedInput_in.write((string + System.getProperty("line.separator")).getBytes());
         redirectedInput_in.flush();
         assertEquals(string, InputTools.getLine());
-        */
+    }
+
+    @Test
+    public void inputShouldBeConsole(){
+        //
     }
 
     @Test
