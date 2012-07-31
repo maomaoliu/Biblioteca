@@ -12,31 +12,44 @@ import java.util.logging.Logger;
  */
 public class InputTools {
 
-//    private static Logger LOGGER = Logger.getLogger(InputTools.class.getCanonicalName());
+    private static Logger LOGGER = Logger.getLogger(InputTools.class.getCanonicalName());
 
     private static Object input;
 
     /*
-     * Why do you use two different ways to capture input?
-     *
-     * Is the code readable?
-     *
-     */
+    * Why do you use two different ways to capture input?
+    *
+    * Is the code readable?
+    *
+    */
     static {
         Console console = System.console();
         if (console != null) {
-//            LOGGER.info("using console to capture input");
+            LOGGER.info("using console to capture input");
             input = console;
-        }
-        else {
-//            LOGGER.info("using scanner to capture input");
+        } else {
+            LOGGER.info("using scanner to capture input");
             input = new Scanner(System.in);
         }
     }
 
+    public static void setInput(Object input) {
+        if (input.getClass().equals(Console.class)) {
+            LOGGER.info("assign console to capture input");
+            InputTools.input = input;
+        } else if (input.getClass().equals(Scanner.class)) {
+            LOGGER.info("assign scanner to capture input");
+            InputTools.input = input;
+        }
+    }
+
+    public static Object getInput() {
+        return input;
+    }
+
     public static String getLine() {
         if (input.getClass().equals(Console.class)) {
-            return ((Console) input).readLine();
+            return ((Console)input).readLine();
         } else {
             return ((Scanner) input).nextLine();
         }
@@ -44,7 +57,7 @@ public class InputTools {
 
     public static String getPassword() {
         if (input.getClass().equals(Console.class)) {
-            char[] password = ((Console) input).readPassword();
+            char[] password = ((Console)input).readPassword();
             return new String(password);
         } else {
             return ((Scanner) input).nextLine();

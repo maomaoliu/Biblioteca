@@ -1,13 +1,21 @@
 package tw.uitools;
 
+import org.easymock.EasyMock;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.*;
-import java.rmi.activation.ActivationGroupDesc;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({Console.class, System.class, InputTools.class})
 
 public class TestInputTools {
     private static PipedOutputStream redirectedInput_in;
@@ -38,7 +46,20 @@ public class TestInputTools {
     }
 
     @Test
-    public void testGetLine() throws IOException {
+    public void inputShouldBeConsole() {
+        InputTools.setInput(PowerMock.createMock(Console.class));
+        assertEquals(Console.class, InputTools.getInput().getClass());
+    }
+
+    @Test
+    public void inputShouldBeScanner() {
+        InputTools.setInput(new Scanner(System.in));
+        assertEquals(Scanner.class, InputTools.getInput().getClass());
+    }
+
+    @Test
+    public void testGetLineWithScanner() throws IOException {
+        InputTools.setInput(new Scanner(System.in));
         String string = "Hello";
         redirectedInput_in.write((string + System.getProperty("line.separator")).getBytes());
         redirectedInput_in.flush();
@@ -46,13 +67,28 @@ public class TestInputTools {
     }
 
     @Test
-    public void inputShouldBeConsole(){
-        //
+    public void testGetLineWithConsole() throws Exception {
+        String string = "Hello";
+        InputTools.getInput();
+        PowerMock.mockStatic(System.class);
+        Console consoleMock = PowerMock.createMock(Console.class);
+        EasyMock.expect(consoleMock.readLine()).andReturn(string);
+        PowerMock.replayAll();
+        InputTools.setInput(consoleMock);
+        assertEquals(string, InputTools.getLine());
+        PowerMock.verifyAll();
     }
 
     @Test
-    public void testGetPassword() {
-        // Not yet.
-        // How to make Console.
+    public void testGetPassword() throws IOException {
+        String password = "password";
+        InputTools.getInput();
+        PowerMock.mockStatic(System.class);
+        Console consoleMock = PowerMock.createMock(Console.class);
+        EasyMock.expect(consoleMock.readPassword()).andReturn(password.toCharArray());
+        PowerMock.replayAll();
+        InputTools.setInput(consoleMock);
+        assertEquals(password, InputTools.getPassword());
+        PowerMock.verifyAll();
     }
 }

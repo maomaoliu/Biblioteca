@@ -18,7 +18,7 @@
         <javac srcdir="${test}" destdir="${dest}" encoding="utf-8" classpath="${lib}\junit-4.10.jar"/>
     </target>
     <target name="test" depends="compile">
-        <junit printsummary="yes" haltonfailure="yes" fork="yes">
+        <junit printsummary="yes" haltonfailure="yes" fork="yes" showoutput="yes">
             <classpath location="${lib}\junit-4.10.jar" path="${dest}"/>
             <formatter type="xml"/>
             <batchtest todir="${reports}">
