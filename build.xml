@@ -8,6 +8,13 @@
     <property name="reports" value="${dir}\reports"/>
     <property name="targetJar" value="${dir}\Biblioteca.jar"/>
     <property name="main_class" value="tw.Biblioteca"/>
+
+    <path id="compile.classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
     <target name="init">
         <tstamp/>
         <mkdir dir="${dest}"/>
@@ -15,11 +22,18 @@
     </target>
     <target name="compile" depends="init">
         <javac srcdir="${src}" destdir="${dest}" encoding="utf-8"/>
-        <javac srcdir="${test}" destdir="${dest}" encoding="utf-8" classpath="${lib}\junit-4.10.jar"/>
+        <javac srcdir="${test}" destdir="${dest}" encoding="utf-8">
+            <classpath refid="compile.classpath" />
+        </javac>
     </target>
     <target name="test" depends="compile">
         <junit printsummary="yes" haltonfailure="yes" fork="yes" showoutput="yes">
-            <classpath location="${lib}\junit-4.10.jar" path="${dest}"/>
+            <classpath>
+                <pathelement path="${dest}" />
+                <fileset dir="${lib}">
+                    <include name="*.jar" />
+                </fileset>
+                    </classpath>
             <formatter type="xml"/>
             <batchtest todir="${reports}">
                 <fileset dir="${test}">
