@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.*;
 import java.rmi.activation.ActivationGroupDesc;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertEquals;
 
@@ -54,5 +55,18 @@ public class TestInputTools {
     public void testGetPassword() {
         // Not yet.
         // How to make Console.
+    }
+
+    @Test
+    public void shouldRewireSystemIn() {
+        String data = "Hello, World!\r\n";
+        InputStream stdin = System.in;
+        try {
+            System.setIn(new ByteArrayInputStream(data.getBytes()));
+            Scanner scanner = new Scanner(System.in);
+            System.out.println(scanner.nextLine());
+        } finally {
+            System.setIn(stdin);
+        }
     }
 }
