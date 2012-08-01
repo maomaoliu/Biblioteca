@@ -6,7 +6,11 @@ import tw.uitools.PrintTools;
 public class MovieAction {
 
     public String showMovies() {
-        return "Movie name\tDirector\tRating\n" + MovieList.getInstance().getListString();
+        StringBuilder movies = new StringBuilder("Movie name\tDirector\tRating\n");
+        for (Movie movie: MovieList.getInstance().getMovies()){
+            movies.append(movie).append("\n");
+        }
+        return movies.toString();
     }
 
     public void action() {

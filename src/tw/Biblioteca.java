@@ -92,7 +92,7 @@ public class Biblioteca {
         for (String menuItem : getMenuList())
             PrintTools.printlnWithStar(menuItem);
         PrintTools.printlnWithStar(" ");
-        PrintTools.printlnWithStar("Input NUMBER to choose menu options.");
+    PrintTools.printlnWithStar("Input NUMBER to choose menu options.");
         if (this.getUsername() == null)
             PrintTools.printlnWithStar("Input LOGIN to log in.");
         PrintTools.printlnWithStar("Input 'QUIT' to terminate.");

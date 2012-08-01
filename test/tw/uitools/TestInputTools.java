@@ -2,6 +2,7 @@ package tw.uitools;
 
 import org.easymock.EasyMock;
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,25 +25,21 @@ public class TestInputTools {
 
     @BeforeClass
     public static void before() throws Exception {
-        setUp();
-    }
-
-    private static void setUp() throws IOException {
         standardInputStream = System.in;
         redirectedInput_in = new PipedOutputStream();
         redirectedInput_out = new PipedInputStream(redirectedInput_in);
-        System.setIn(redirectedInput_out);
-    }
+        System.setIn(redirectedInput_out);    }
 
     @AfterClass
     public static void after() throws Exception {
-        tearDown();
-    }
-
-    private static void tearDown() throws IOException {
         System.setIn(standardInputStream);
         redirectedInput_in.close();
         System.in.close();
+    }
+
+    @Before
+    public void setUp() throws Exception {
+           flush();
     }
 
     @Test
@@ -61,9 +58,13 @@ public class TestInputTools {
     public void testGetLineWithScanner() throws IOException {
         InputTools.setInput(new Scanner(System.in));
         String string = "Hello";
+        inputLine(string);
+        assertEquals(string, InputTools.getLine());
+    }
+
+    public static void inputLine(String string) throws IOException {
         redirectedInput_in.write((string + System.getProperty("line.separator")).getBytes());
         redirectedInput_in.flush();
-        assertEquals(string, InputTools.getLine());
     }
 
     @Test
@@ -103,5 +104,9 @@ public class TestInputTools {
         } finally {
             System.setIn(stdin);
         }
+    }
+
+    public static void flush() throws IOException {
+        redirectedInput_in.flush();
     }
 }

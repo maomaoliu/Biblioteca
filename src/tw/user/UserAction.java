@@ -28,7 +28,7 @@ public class UserAction {
         PrintTools.println("Input username, please.");
         String username = InputTools.getLine();
         PrintTools.println("Input password, please.");
-        String password = new String(InputTools.getPassword());
+        String password = InputTools.getPassword();
         String output = this.login(username, password);
         PrintTools.println(output);
     }

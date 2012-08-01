@@ -1,9 +1,16 @@
 package tw;
 
 import junit.framework.Assert;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import tw.book.TestBookAction;
+import tw.movie.TestMovieAction;
+import tw.uitools.TestInputTools;
 import tw.uitools.TestPrintTools;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +19,24 @@ import static junit.framework.Assert.assertEquals;
 public class TestBiblioteca {
 
     private Biblioteca biblioteca = new Biblioteca();
+
+    @BeforeClass
+    public static void before() throws Exception {
+        TestInputTools.before();
+        TestPrintTools.before();
+    }
+
+    @AfterClass
+    public static void after() throws Exception {
+        TestInputTools.after();
+        TestPrintTools.after();
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        TestInputTools.flush();
+        TestPrintTools.flush();
+    }
 
     @Test
     public void testGetWelcome() {
@@ -58,31 +83,103 @@ public class TestBiblioteca {
     }
 
     @Test
-    public void testShowCheckNumberMessage() {
+    public void shouldShowTipsWithoutLoginWhenCheckLibraryNumber() {
         assertEquals("Please talk to Librarian. Thank you.", biblioteca.checkNumber());
+        shouldShowNumberWithLoginWhenCheckLibraryNumber();
+    }
+
+    @Test
+    public void shouldShowNumberWithLoginWhenCheckLibraryNumber() {
         String username = "111-1113";
         biblioteca.setUsername(username);
         assertEquals("Number is: " + username, biblioteca.checkNumber());
     }
 
-    /*
-     * Actually, this test is blocked, because action() in BookAction,
-     * the application waiting for some user input, so if there is no input,
-     * action() will not finished, and output string can not be captured.
-     * I don't know how to avoid these situation.
-     */
     @Test
-    public void testActionWithViewBook() throws Exception {
-        /*
-        TestPrintTools.before();
-        biblioteca.action(MenuOption.ViewBooks);
-        String startsLine = "******************************************";
-        String lineSeperator = System.getProperty("line.separator");
-        String showBookFirstLine = "*  BOOK LIST                             *";
-        String expectString = (startsLine + lineSeperator + showBookFirstLine).substring(90);
-        assertEquals(expectString, TestPrintTools.getFirst100CharsFromSystemOut().substring(90));
-        TestPrintTools.after();
-        */
+    public void testShowWelcomeAndMenu() throws IOException {
+        biblioteca.showWelcomeAndMenu();
+        showWelcomeAndMenuAsserts(false);
     }
 
+    @Test
+    public void testActionWithViewBook() throws Exception {
+        TestInputTools.inputLine("Book_1");
+        TestInputTools.inputLine("tomenu");
+        biblioteca.action(MenuOption.ViewBooks);
+        TestBookAction testBookAction = new TestBookAction();
+        testBookAction.showBooksAsserts();
+        assertEquals("Thank You! Enjoy the book.", TestPrintTools.getLineFromSystemOut());
+        showWelcomeAndMenuAsserts(false);
+    }
+
+    @Test
+    public void testActionWithViewMovie() throws Exception {
+        TestInputTools.inputLine("Any");
+        biblioteca.action(MenuOption.ViewMovies);
+        TestMovieAction testMovieAction = new TestMovieAction();
+        testMovieAction.actionAssert();
+        showWelcomeAndMenuAsserts(false);
+    }
+
+    @Test
+    public void shouldLoginWhenTestActionWithLogin() throws Exception {
+        TestInputTools.inputLine("111-1111");
+        TestInputTools.inputLine("pw1");
+        biblioteca.action(MenuOption.Login);
+        assertEquals("Input username, please.", TestPrintTools.getLineFromSystemOut());
+        assertEquals("Input password, please.", TestPrintTools.getLineFromSystemOut());
+        assertEquals("User 111-1111, welcome here!", TestPrintTools.getLineFromSystemOut());
+        assertEquals("111-1111", biblioteca.getUsername());
+        showWelcomeAndMenuAsserts(true);
+    }
+
+    @Test
+    public void testActionWithCheckLibNumberWhenNotLogin() throws Exception {
+        TestInputTools.inputLine("111-11121");
+        TestInputTools.inputLine("pw1");
+        biblioteca.action(MenuOption.Login);
+        assertEquals("Input username, please.", TestPrintTools.getLineFromSystemOut());
+        assertEquals("Input password, please.", TestPrintTools.getLineFromSystemOut());
+        assertEquals("Username/password is not correct.", TestPrintTools.getLineFromSystemOut());
+        assertEquals(null, biblioteca.getUsername());
+        showWelcomeAndMenuAsserts(false);
+    }
+
+    @Test
+    public void testActionWithCheckLibNumberWhenLogin() throws Exception {
+        TestInputTools.inputLine("111-1111");
+        TestInputTools.inputLine("pw1");
+        biblioteca.action(MenuOption.Login);
+        assertEquals("Input username, please.", TestPrintTools.getLineFromSystemOut());
+        assertEquals("Input password, please.", TestPrintTools.getLineFromSystemOut());
+        assertEquals("User 111-1111, welcome here!", TestPrintTools.getLineFromSystemOut());
+        assertEquals("111-1111", biblioteca.getUsername());
+        showWelcomeAndMenuAsserts(true);
+        biblioteca.action(MenuOption.CheckLibNumber);
+        assertEquals("Number is: " + "111-1111", TestPrintTools.getLineFromSystemOut());
+    }
+
+    @Test
+    public void testActionWithError() throws Exception {
+        biblioteca.action(MenuOption.CheckLibNumber);
+        assertEquals("Please talk to Librarian. Thank you.", TestPrintTools.getLineFromSystemOut());
+    }
+
+    public void showWelcomeAndMenuAsserts(boolean hasLogin) throws IOException {
+        String startsLine = "******************************************";
+        assertEquals(startsLine, TestPrintTools.getLineFromSystemOut());
+        assertEquals(TestPrintTools.getStringWithStars(biblioteca.showWelcome()), TestPrintTools.getLineFromSystemOut());
+        assertEquals(TestPrintTools.getStringWithStars(" "), TestPrintTools.getLineFromSystemOut());
+        assertEquals(TestPrintTools.getStringWithStars("MENU"), TestPrintTools.getLineFromSystemOut());
+        assertEquals(TestPrintTools.getStringWithStars("1. View books in library."), TestPrintTools.getLineFromSystemOut());
+        assertEquals(TestPrintTools.getStringWithStars("2. Check library number."), TestPrintTools.getLineFromSystemOut());
+        assertEquals(TestPrintTools.getStringWithStars("3. View movies in library."), TestPrintTools.getLineFromSystemOut());
+        assertEquals(TestPrintTools.getStringWithStars(" "), TestPrintTools.getLineFromSystemOut());
+        assertEquals(TestPrintTools.getStringWithStars("Input NUMBER to choose menu options."), TestPrintTools.getLineFromSystemOut());
+        if (!hasLogin) {
+            assertEquals(TestPrintTools.getStringWithStars("Input LOGIN to log in."), TestPrintTools.getLineFromSystemOut());
+        }
+        assertEquals(TestPrintTools.getStringWithStars("Input 'QUIT' to terminate."), TestPrintTools.getLineFromSystemOut());
+        assertEquals(startsLine, TestPrintTools.getLineFromSystemOut());
+    }
 }

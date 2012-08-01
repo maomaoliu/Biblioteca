@@ -22,15 +22,8 @@ public class MovieList {
         return movieList;
     }
 
-    /*
-     * Is this a good name for this method? Can you think of a better one?
-     */
-    public String getListString() {
-        StringBuilder movieListString = new StringBuilder();
-        for(int i=0; i<15; i++){
-            movieListString.append(movies.get(i));
-            if(i<14) movieListString.append("\n");
-        }
-        return movieListString.toString();
+    public List<Movie> getMovies() {
+        return movies;
     }
+
 }

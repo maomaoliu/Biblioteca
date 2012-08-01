@@ -1,6 +1,7 @@
 package tw.uitools;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,30 +21,28 @@ public class TestPrintTools {
 
     @BeforeClass
     public static void before() throws Exception {
-        setUp();
-    }
-
-    private static void setUp() throws IOException {
         standardOutputStream = System.out;
         redirectedOutput_in = new PipedInputStream();
         redirectedOutput_out = new PipedOutputStream(redirectedOutput_in);
         System.setOut(new PrintStream(redirectedOutput_out));
     }
 
+
     @AfterClass
     public static void after() throws Exception {
-        tearDown();
-    }
-
-    private static void tearDown() throws IOException {
         redirectedOutput_out.close();
         System.out.close();
         System.setOut(standardOutputStream);
+    }
 
+    @Before
+    public void setUp() throws Exception {
+        flush();
     }
 
     @Test
     public void testPrintlnWithStars() throws IOException {
+        flush();
         String startsLine = "******************************************";
         PrintTools.printlnWithStars();
         assertEquals(startsLine, getLineFromSystemOut());
@@ -51,8 +50,9 @@ public class TestPrintTools {
 
     @Test
     public void testPrintlnWithStar() throws IOException {
+        flush();
         String string = "X&Y";
-        String expectStringWithStar = "*  X&Y                                   *";
+        String expectStringWithStar = getStringWithStars(string);
         PrintTools.printlnWithStar(string);
         assertEquals(expectStringWithStar, getLineFromSystemOut());
     }
@@ -60,15 +60,12 @@ public class TestPrintTools {
     @Test
     public void testPrintln() throws IOException {
         String string = "TRUE";
+        flush();
         PrintTools.println(string);
         assertEquals(string, getLineFromSystemOut());
     }
 
     public static String getLineFromSystemOut() throws IOException {
-        /*byte[] b = new byte[100];
-        int len = 0;
-        len = redirectedOutput_in.read(b);
-        return new String(b, 0, len).trim();*/
         ArrayList<Byte> bytes = new ArrayList<Byte>();
         int byteData = redirectedOutput_in.read();
         while (byteData != -1 && byteData != (System.getProperty("line.separator")).getBytes()[0]) {
@@ -80,5 +77,27 @@ public class TestPrintTools {
             byteD[i] = bytes.get(i);
         }
         return new String(byteD, 0, bytes.size()).trim();
+    }
+
+    public static String getAllFromSystemOut() throws IOException {
+        int availableBytes = redirectedOutput_in.available();
+        byte[] bytes = new byte[availableBytes];
+        redirectedOutput_in.read(bytes, 0, availableBytes);
+        return new String(bytes, 0, bytes.length);
+    }
+
+    public static void flush() throws IOException {
+        int availableBytes = redirectedOutput_in.available();
+        redirectedOutput_in.skip(availableBytes);
+    }
+
+    public static String getStringWithStars(String string) {
+        StringBuilder stringWithStars = new StringBuilder("*  ");
+        stringWithStars.append(string);
+        for (int i = 36; i > string.length(); i--) {
+            stringWithStars.append(" ");
+        }
+        stringWithStars.append("  *");
+        return stringWithStars.toString();
     }
 }

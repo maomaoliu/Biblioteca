@@ -17,26 +17,24 @@ public class User {
         this.username = username;
     }
 
-    /*
-     * When overriding equals, you need to override hashcode as well.
-     *
-     * Please find out why and do it.
-     *
-     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj instanceof User) {
-            User user = (User) obj;
-            return this.username.equals(user.getUsername())
-                    && this.password.equals(user.getPassword());
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return this == null ? super.hashCode() : (this.getUsername().hashCode() + this.getPassword().hashCode());
+        int result = username != null ? username.hashCode() : 0;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        return result;
     }
 
     public String getPassword() {

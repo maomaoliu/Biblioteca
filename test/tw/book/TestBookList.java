@@ -19,8 +19,12 @@ public class TestBookList {
      */
     @Test
     public void testGetBooks(){
-        Book book2 = new Book("Book_2");
-        assertEquals(book2, bookList.getBooks().get(1));
+        assertEquals(5, bookList.getBooks().size());
+        assertTrue(bookList.isBookInList("Book_1"));
+        assertTrue(bookList.isBookInList("Book_2"));
+        assertTrue(bookList.isBookInList("Book_3"));
+        assertTrue(bookList.isBookInList("Book_4"));
+        assertTrue(bookList.isBookInList("Book_5"));
     }
 
     @Test

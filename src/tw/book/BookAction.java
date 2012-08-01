@@ -19,10 +19,10 @@ public class BookAction {
 
     public void action() {
         showBooks();
-        String input = InputTools.getLine();
-        while (!this.judgeForToMenu(input)) {
+        while (true) {
+            String input = InputTools.getLine();
+            if(this.judgeForToMenu(input)) break;
             PrintTools.println(reserveBook(input));
-            input = InputTools.getLine();
         }
     }
 

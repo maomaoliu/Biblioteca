@@ -15,25 +15,21 @@ public class Book {
         this.name = name;
     }
 
-    /*
-     * When overriding equals, you need to override hashcode as well.
-     *
-     * Please find out why and do it.
-     *
-     */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj instanceof Book) {
-            Book book = (Book) obj;
-            return this.name.equals(book.getName());
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        if (name != null ? !name.equals(book.name) : book.name != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return this == null ? super.hashCode() : this.getName().hashCode();
+        return name != null ? name.hashCode() : 0;
     }
 
     @Override

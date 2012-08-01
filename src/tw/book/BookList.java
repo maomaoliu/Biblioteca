@@ -5,9 +5,6 @@ import java.util.List;
 
 public class BookList {
 
-    /*
-     * Why are these static members?
-     */
     private static BookList bookList;
     private List<Book> books;
 
